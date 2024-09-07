@@ -1,6 +1,9 @@
 package student.management.StudentManagement;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.springframework.boot.SpringApplication;
@@ -28,17 +31,17 @@ public class StudentManagementSystemApplication {
 
 
 	@GetMapping("/print")
-	public String printAllStudentInfo() {
+	public List<String> printAllStudentInfo() {
 
 		int cnt = studentInfoMap.size();
-		String students = "";
+		List<String> students = new ArrayList<>();
 		if (cnt == 0) {
-			return "no data";
+			return Collections.singletonList("no data");
 		} else {
 			for (Entry<String, String> entry : studentInfoMap.entrySet()) {
 				String name = entry.getKey();
 				String age = entry.getValue();
-				students = students + "\n氏名：" + name + "　年齢：" + age;
+				students.add("氏名：" + name + "　年齢：" + age);
 			}
 			return students;
 		}
@@ -50,7 +53,7 @@ public class StudentManagementSystemApplication {
 			studentInfoMap.remove(name);
 			return name + "is deleted.";
 		} else {
-			return name + " hasn't any value.";
+			return name + " doesn't have any value.";
 		}
 	}
 	//`コマンドは、curl -X DELETE "http://localhost:8080/delete?name=苗字%20名前"　%20はスペースを表す
